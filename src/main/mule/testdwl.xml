@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f092ef6e-9d7d-498f-adff-479f8744cb6b" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="262ee421-3d95-40fc-827d-3308933dc661" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<os:object-store name="Object_store" doc:name="Object store" doc:id="5cb0a2e8-3bfb-493f-a74e-d293669c30bb" />
+	<jms:config name="JMS_Config" doc:name="JMS Config" doc:id="08ec7d60-123d-4a8d-9c8c-a8e92b5c2fe7" >
+		<jms:active-mq-connection username="admin" password="admin" >
+			<jms:factory-configuration brokerUrl="tcp://localhost:61616" initialRedeliveryDelay="60000" redeliveryDelay="60000" maxRedelivery="3"/>
+		</jms:active-mq-connection>
+	</jms:config>
+	<flow name="testdwlFlow2" doc:id="014c9ba7-6112-402e-b69a-e11d0f008e40" >
+		<http:listener doc:name="Listener" doc:id="1703e6ca-6936-4e73-a2c5-af6cb5d7e1e5" config-ref="HTTP_Listener_config" path="/data" allowedMethods="POST"/>
+		<set-payload value='#[payload as String ++ "HTTP-"]' doc:name="Set Payload" doc:id="cd56eed0-18de-465c-bcdf-c80fdb2c56b6" />
+	</flow>
+</mule>
