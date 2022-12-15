@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
 http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f092ef6e-9d7d-498f-adff-479f8744cb6b" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
 	</http:listener-config>
 	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="262ee421-3d95-40fc-827d-3308933dc661" >
 		<http:request-connection host="localhost" port="8081" />
@@ -21,6 +21,7 @@ http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/
 			<jms:factory-configuration brokerUrl="tcp://localhost:61616" initialRedeliveryDelay="60000" redeliveryDelay="60000" maxRedelivery="3"/>
 		</jms:active-mq-connection>
 	</jms:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="71d614af-8da0-43ba-9ee0-12c6b5971bb9" file="config.yaml" />
 	<flow name="testdwlFlow2" doc:id="014c9ba7-6112-402e-b69a-e11d0f008e40" >
 		<http:listener doc:name="Listener" doc:id="1703e6ca-6936-4e73-a2c5-af6cb5d7e1e5" config-ref="HTTP_Listener_config" path="/data" allowedMethods="POST"/>
 		<set-payload value='#[payload as String ++ "HTTP-"]' doc:name="Set Payload" doc:id="cd56eed0-18de-465c-bcdf-c80fdb2c56b6" />
